@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-function _kill_recurse {
+_kill_recurse() {
     cpids=`pgrep -P $1|xargs`
     for cpid in $cpids;
     do
@@ -11,8 +11,8 @@ function _kill_recurse {
 }
 
 
-function _term {
-    if [[ $1 != '' ]] then
+_term() {
+    if [[ $1 != '' ]]; then
         if ps -p $1 > /dev/null; then
             _kill_recurse $1
         fi
@@ -52,7 +52,7 @@ function _help {
 }
 
 
-function main {
+main() {
     clear_screen=false
     verbose=false
 
@@ -94,7 +94,7 @@ function main {
 
     while ! $quit; do
         b=`/bin/ls -l --time-style=full-iso $*`
-        if [[ $a != $b ]] then
+        if [[ $a != $b ]]; then
             _term $pid
             [[ $clear_screen == true ]] && clear
             [[ $verbose == true ]] && [[ $pid != '' ]] && echo "$(basename $0): Reloading..."
